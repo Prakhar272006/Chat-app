@@ -36,7 +36,7 @@ const ChatContainer = () => {
             <div className="chat-header mb-1">
                 <time className="text-xs opacity-50 ml-1">{message.createdAt}</time>
             </div>
-            <div className="chat-bubble flex">
+            <div className="chat-bubble flex flex-col">
             {message.image && (
                 <img
                   src={message.image}

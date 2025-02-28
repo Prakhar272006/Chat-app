@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useChatStore } from '../store/useChatStore';
-import { useAuthStore } from '../store/useAuthStore';
-import SidebarSkeleton from './skeletons/SidebarSkeleton';
-import { Users } from 'lucide-react';
+import React, { useEffect } from "react";
+import { useChatStore } from "../store/useChatStore";
+import { useAuthStore } from "../store/useAuthStore";
+import SidebarSkeleton from "./skeletons/SidebarSkeleton";
+import { Users } from "lucide-react";
 
 const Sidebar = () => {
-  const { users, getUsers, isUserLoading, setSelectedUser, selectedUser } = useChatStore();
-
+  const { users, getUsers, isUserLoading, setSelectedUser, selectedUser } =
+    useChatStore();
+  const { onlineUsers } = useAuthStore();
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -28,18 +29,34 @@ const Sidebar = () => {
         {users.map((user) => (
           <button
             key={user._id}
-            onClick={() => {setSelectedUser(user)
-              console.log(user)}
-            
-            }
+            onClick={() => {
+              setSelectedUser(user);
+              console.log(user);
+            }}
             className={`
               w-full p-3 flex items-center gap-3
               hover:bg-base-300 transition-colors
-              ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
+              ${
+                selectedUser?._id === user._id
+                  ? "bg-base-300 ring-1 ring-base-300"
+                  : ""
+              }
             `}
           >
-            <img src={user.profilePic || "/avatar.png"} alt={user.fullName} className="w-10 h-10 rounded-full object-cover" />
-            <span className="hidden lg:block">{user.fullName}</span>
+            <div className="relative flex justify-center items-center  gap-4 mx-auto lg:mx-0">
+              <img
+                src={user.profilePic || "/avatar.png"}
+                alt={user.fullName}
+                className="size-12 object-cover rounded-full"
+              />
+                <span className="hidden lg:block">{user.fullName}</span>
+              {onlineUsers.includes(user._id) && (
+                <span
+                  className="absolute bottom-0 right-0 size-3 bg-green-500 
+                  rounded-full ring-2 ring-zinc-900"
+                />
+              )}
+            </div>
           </button>
         ))}
       </div>

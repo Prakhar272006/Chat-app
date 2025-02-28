@@ -34,7 +34,7 @@ const ChatContainer = () => {
               </div>
             </div>
             <div className="chat-header mb-1">
-                <time className="text-xs opacity-50 ml-1">{message.createdAt}</time>
+                <time className="text-xs opacity-50 ml-1">{message.createdAt?.split("T")[0] + " " + message.createdAt?.split("T")[1].split(".")[0]}</time>
             </div>
             <div className="chat-bubble flex flex-col">
             {message.image && (
